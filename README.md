@@ -14,6 +14,8 @@
 
 - Linux `amd64`
 - Windows `amd64`
+- macOS `arm64`
+- macOS `amd64`
 
 ## 安装
 
@@ -50,6 +52,7 @@ npm install -g 1cat-tunnel-client
 
 - Linux: `${XDG_CONFIG_HOME:-~/.config}/1cat-tunnel`
 - Windows: `%APPDATA%\1cat-tunnel`
+- macOS: `~/Library/Application Support/1cat-tunnel`
 
 这个目录里会保存：
 
@@ -90,6 +93,8 @@ GitHub Release 会附带这些文件：
 
 - `tunnel-client-linux-amd64`
 - `tunnel-client-windows-amd64.exe`
+- `tunnel-client-darwin-arm64`
+- `tunnel-client-darwin-amd64`
 - `checksums.txt`
 
 `npm install` 时会自动下载并校验这些文件。

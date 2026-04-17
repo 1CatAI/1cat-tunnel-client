@@ -2,7 +2,7 @@
 
 这个 npm 包用于分发和启动预编译的 `1Cat Tunnel` 客户端二进制。
 
-它不会发布 Go 源码，客户端安装时会从 GitHub Release 下载对应平台的预编译程序。
+它不会发布 Go 源码，npm 包内会自带对应平台的预编译程序。
 
 ## 安装要求
 
@@ -28,8 +28,53 @@ npm install -g 1cat-tunnel-client
 安装完成后启动客户端：
 
 ```bash
+hash -r
 1cat-tunnel-client
 ```
+
+如果你刚安装完仍然提示 `command not found`，通常只是当前终端还没刷新命令缓存。
+
+可以任选一种方式：
+
+- 先执行一次 `hash -r`
+- 重新打开一个新的终端窗口
+
+说明：
+
+- 使用 `nvm` 的机器不要加 `sudo`
+- 普通用户直接执行 `npm install -g ...` 即可
+
+## 一条龙安装流程
+
+如果你是第一次在客户机上安装，可以直接照下面做：
+
+### 1. 在服务端控制台签发 token
+
+先在服务端 Web 控制台为这个节点创建专属 `bootstrap token`。
+
+### 2. 在客户机安装客户端
+
+```bash
+npm install -g 1cat-tunnel-client
+hash -r
+```
+
+### 3. 启动客户端
+
+```bash
+1cat-tunnel-client
+```
+
+### 4. 按向导完成配置
+
+依次完成：
+
+1. 粘贴 `bootstrap token`
+2. 选择要开放的预设，例如 `SSH` 或 `RDP`
+3. 确认本地地址
+4. 保存配置并启动
+
+完成后，客户端会自动连接到服务端。
 
 ## 首次配置
 
@@ -89,7 +134,7 @@ npm install -g 1cat-tunnel-client
 
 ## 发布内容
 
-GitHub Release 会附带这些文件：
+npm 包和 GitHub Release 都会附带这些文件：
 
 - `tunnel-client-linux-amd64`
 - `tunnel-client-windows-amd64.exe`
@@ -97,13 +142,13 @@ GitHub Release 会附带这些文件：
 - `tunnel-client-darwin-amd64`
 - `checksums.txt`
 
-`npm install` 时会自动下载并校验这些文件。
+`npm install` 时会优先使用 npm 包内自带的二进制；如果包内资产不存在，才会回退到 GitHub Release 下载。
 
 ## 常见问题
 
 ### 1. 安装时报下载失败
 
-通常是客户机当前无法访问 GitHub Release。
+通常是当前网络阻止了 npm registry 或 GitHub Release。
 
 可以先检查：
 
@@ -112,6 +157,31 @@ GitHub Release 会附带这些文件：
 - 当前平台是否在支持列表内
 
 如果客户现场网络限制较多，也可以改用已经打好的离线交付包。
+
+### 1.1 命令不存在或没有生效
+
+如果你已经安装完成，但终端提示：
+
+- `command not found: 1cat-tunnel-client`
+
+请先执行：
+
+```bash
+hash -r
+which 1cat-tunnel-client
+```
+
+如果 `which` 仍然没有输出，重新打开一个新的终端窗口再试。
+
+### 1.2 不要用 sudo
+
+如果你的 Node.js 是通过 `nvm` 安装的，不要用：
+
+```bash
+sudo npm install -g 1cat-tunnel-client
+```
+
+否则 `sudo` 进入的环境通常拿不到你的 `nvm` 路径。
 
 ### 2. 运行后没有进入向导
 
